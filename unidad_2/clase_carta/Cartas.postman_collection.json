@@ -1,0 +1,238 @@
+{
+  "info": {
+    "_postman_id": "7f7e8d4c-2d9c-4f6a-a8b4-4a6e0f1c2026",
+    "name": "Cartas",
+    "description": "Colección para probar la API REST del proyecto Cartas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear carta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/cartas/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fecha\": \"2026-11-03\",\n  \"texto\": \"Hola, esta es una carta de prueba.\",\n  \"remitente\": \"Juan\",\n  \"destinatario\": \"María\",\n  \"direccion\": \"Calle 10 # 5-20, Sevilla\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 201 - Carta creada', function () { pm.response.to.have.status(201); });",
+              "const respuesta = pm.response.json();",
+              "pm.collectionVariables.set('carta_id', respuesta.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar cartas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/cartas/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            ""
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200 - Lista de cartas', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultar carta",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/cartas/{{carta_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            "{{carta_id}}",
+            ""
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200 - Carta consultada', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reemplazar carta",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/cartas/{{carta_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            "{{carta_id}}",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fecha\": \"2026-11-03\",\n  \"texto\": \"Texto completo actualizado de la carta.\",\n  \"remitente\": \"Juan Esteban\",\n  \"destinatario\": \"María\",\n  \"direccion\": \"Carrera 8 # 12-30, Sevilla\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200 - Carta reemplazada', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Modificar carta",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/cartas/{{carta_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            "{{carta_id}}",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Solo se modificó el texto de la carta.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200 - Carta modificada', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eliminar carta",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/cartas/{{carta_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cartas",
+            "{{carta_id}}",
+            ""
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 204 - Carta eliminada', function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "carta_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
